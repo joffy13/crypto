@@ -1,0 +1,53 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String @id @default(uuid()) @db.Uuid
+  username    String
+  hashed_info String
+
+  @@map("users")
+}
+
+model Currency {
+  id                   String                 @id @default(uuid()) @db.Uuid
+  is_available         Boolean
+  current_amount       Int
+  quotes               Json
+  constant             CurrencyConstant       @relation(fields: [constant_id], references: [id])
+  constant_id          String                 @db.Uuid
+  created_at           DateTime               @map("created_at")
+  CalculatedCurrencies CalculatedCurrencies[]
+}
+
+model CurrencyConstant {
+  id           String     @id @default(uuid()) @db.Uuid
+  created_at   DateTime   @map("created_at")
+  name         String
+  symbol       String
+  exchange_min Int
+  exchange_max Int
+  type         String
+  coin_cdn_url String
+  currencies   Currency[]
+}
+
+model CalculatedCurrencies {
+  id             String   @id @default(uuid()) @db.Uuid
+  created_at     DateTime @map("created_at")
+  in_currecny    Currency @relation(fields: [in_currency_id], references: [id])
+  in_currency_id String   @db.Uuid
+}
+
+model Config {
+  id               String   @id @default(uuid()) @db.Uuid
+  currency_percent Int
+  created_at       DateTime @map("created_at")
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/crypto-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/crypto-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/crypto-api",
+  "projects": {
+    "crypto-api": {
+      "type": "application",
+      "root": "apps/crypto-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/crypto-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/crypto-api/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "currency-tasker": {
+      "type": "application",
+      "root": "apps/currency-tasker",
+      "entryFile": "main",
+      "sourceRoot": "apps/currency-tasker/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/currency-tasker/tsconfig.app.json"
+      }
+    }
+  }
+}
